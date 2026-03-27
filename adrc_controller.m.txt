@@ -1,0 +1,15 @@
+function [u,z1,z2,z3]=adrc_controller(theta,q,theta_ref,z1,z2,z3,dt)
+
+[z1,z2,z3]=eso_observer(theta,0,z1,z2,z3,dt);
+
+k1=60;
+k2=15;
+b=1;
+
+u0=k1*(theta_ref-z1)+k2*(0-z2);
+
+u=(u0-z3)/b;
+
+u=max(min(u,15),-15);
+
+end

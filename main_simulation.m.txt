@@ -1,0 +1,44 @@
+clc
+clear
+close all
+
+addpath dynamics aerodynamics control disturbances visualization
+
+dt = 0.01;
+T = 20;
+time = 0:dt:T;
+
+% initial state vector
+state = zeros(12,1);
+
+state(1) = 300; % u forward velocity
+state(9) = 0;   % pitch angle
+state(12) = 1000; % altitude
+
+z1=0; z2=0; z3=0;
+
+state_history=zeros(12,length(time));
+control_history=zeros(1,length(time));
+
+for k=1:length(time)
+
+t=time(k);
+
+theta_ref = 0.05*sin(0.2*t);
+
+dist = disturbance_model(t);
+
+[u,z1,z2,z3] = adrc_controller(state(8),state(5),theta_ref,z1,z2,z3,dt);
+
+control=[u 0 0];
+
+state_dot = sixdof_dynamics(state,control,dist);
+
+state = state + state_dot*dt;
+
+state_history(:,k)=state;
+control_history(k)=u;
+
+end
+
+plot_results(time,state_history)

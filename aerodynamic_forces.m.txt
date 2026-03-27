@@ -1,0 +1,20 @@
+function [X,Y,Z] = aerodynamic_forces(u,v,w,control)
+
+rho=1.225;
+S=0.5;
+
+V=sqrt(u^2+v^2+w^2);
+
+alpha=atan2(w,u);
+
+CL=2*pi*alpha;
+CD=0.02+0.3*alpha^2;
+
+Lift=0.5*rho*V^2*S*CL;
+Drag=0.5*rho*V^2*S*CD;
+
+X = -Drag + 5000;
+Y = 0;
+Z = -Lift;
+
+end

@@ -1,0 +1,13 @@
+function d = disturbance_model(t)
+
+wind = 0.5*sin(2*t);
+
+gust = 0;
+
+if t>10
+    gust=1;
+end
+
+d = wind + gust;
+
+end

@@ -1,0 +1,39 @@
+function state_dot = sixdof_dynamics(state,control,dist)
+
+m = 200;
+Ix=120; Iy=150; Iz=180;
+
+u=state(1); v=state(2); w=state(3);
+p=state(4); q=state(5); r=state(6);
+
+phi=state(7); theta=state(8); psi=state(9);
+
+[X,Y,Z]=aerodynamic_forces(u,v,w,control);
+
+[L,M,N]=aerodynamic_moments(p,q,r,control);
+
+udot = r*v - q*w + X/m;
+vdot = p*w - r*u + Y/m;
+wdot = q*u - p*v + Z/m;
+
+pdot = L/Ix;
+qdot = M/Iy + dist;
+rdot = N/Iz;
+
+phidot = p + q*sin(phi)*tan(theta) + r*cos(phi)*tan(theta);
+thetadot = q*cos(phi) - r*sin(phi);
+psidot = q*sin(phi)/cos(theta) + r*cos(phi)/cos(theta);
+
+R = coordinate_transform(phi,theta,psi);
+
+vel_body=[u v w]';
+
+vel_inertial = R*vel_body;
+
+xdot = vel_inertial(1);
+ydot = vel_inertial(2);
+zdot = vel_inertial(3);
+
+state_dot=[udot vdot wdot pdot qdot rdot phidot thetadot psidot xdot ydot zdot]';
+
+end
