@@ -1,2 +1,2 @@
-# ADRC-Enabled-6-DOF-Aerospace-Autopilot-Simulator
-Here’s a **350-characterA 6-DOF aerospace flight dynamics simulator built in MATLAB/Simulink, modeling rigid-body motion and aerodynamic forces for full 3D trajectory analysis. Implements an ADRC-based autopilot with an Extended State Observer for robust pitch control and strong anti-disturbance performance.
+This work presents a 6-DOF missile guidance and control system integrating Active Disturbance Rejection Control (ADRC) with Proportional Navigation (PN). An Extended State Observer (ESO) is employed to estimate and mitigate disturbances in real time.
+Simulation data are utilized to train Deep Neural Network (DNN) and Long Short-Term Memory (LSTM) models, enhancing trajectory tracking accuracy and overall system reliability.
